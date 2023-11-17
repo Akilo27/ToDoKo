@@ -1,0 +1,38 @@
+
+  {% extends 'base.html' %}
+
+  {% block title %}{{request.user}}{% endblock %}
+
+  {% block content %}
+  <style>
+    .ui-listview .ui-li-has-alt {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+
+    }
+
+    .ui-listview .ui-btn-icon-notext {
+        border: 1px dashed #ccc;
+    }
+  </style>
+
+
+<form action="/addItemList/" method="post">
+    {% csrf_token %}
+    <input type="text" name="content">
+    <input type="submit" value="Добавить новую категорию">
+</form>
+
+<ul data-role="listview" data-inset="true" id="list" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+  {% for list in itemlist %}
+   <li class="ui-li-has-alt ui-first-child" style="display:flex; align-items:center;">
+    <a href="{{ list.title }}" style="flex-grow:2; margin-left:auto; color:#000000;">{{ list.title }}</a>
+    <a href="/deleteItemList/{{ list.id }}/" data-icon="delete" title="delete" style="margin-left:auto;">delete</a>
+   </li>
+  {% endfor %}
+</ul>
+
+
+    {% endblock %}

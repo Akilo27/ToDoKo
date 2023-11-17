@@ -1,0 +1,54 @@
+
+  {% extends 'base.html' %}
+
+  {% block title %}{{ name }}{% endblock %}
+
+  {% block content %}
+    <style>
+    .ui-listview .ui-li-has-alt {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+
+    }
+
+    .ui-listview .ui-btn-icon-notext {
+        border: 1px dashed #ccc;
+    }
+</style>
+<body>
+
+<a href="/" title="back" class="fs-4" style="margin-left:auto; color:#000000;">back</a>
+
+    <h1>привет, {{username}}! Это твой to do list!</h1>
+
+
+
+
+
+
+<form action="/addTodoItem/{{ name }}/" method="post">
+    {% csrf_token %}
+    <input type="text" name="content">
+    <input type="submit" value="Добавить новое действие">
+</form>
+
+
+<ul data-role="listview" data-inset="true" id="list" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+    {% for item in all_items %}
+        <li class="ui-li-has-alt ui-first-child" style="display:flex; align-items:center;">
+            <p style="flex-grow:1;">{{ item.content }}</p>
+            <a href="/deleteTodoItem/{{ item.id }}/" data-icon="delete" title="delete" style="margin-left:auto;">delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+
+
+</body>
+
+
+    {% endblock %}
